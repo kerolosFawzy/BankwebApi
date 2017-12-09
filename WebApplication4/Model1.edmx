@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BankModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bank_branch1">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="int" Nullable="false" />
+          <Property Name="BranchName" Type="varchar" MaxLength="30" />
+          <Property Name="Address" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SystemUser1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="225" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="225" Nullable="false" />
+          <Property Name="Pasword" Type="varchar" MaxLength="225" Nullable="false" />
+          <Property Name="Account_Number" Type="int" />
+          <Property Name="credit" Type="int" />
+          <Property Name="BrunchCode" Type="int" />
+          <Property Name="Image" Type="image" />
+          <Property Name="UserType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_branch">
+          <End Role="Bank_branch1" Type="Self.Bank_branch1" Multiplicity="0..1" />
+          <End Role="SystemUser1" Type="Self.SystemUser1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bank_branch1">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="SystemUser1">
+              <PropertyRef Name="BrunchCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BankModelStoreContainer">
+          <EntitySet Name="Bank_branch1" EntityType="Self.Bank_branch1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemUser1" EntityType="Self.SystemUser1" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_branch" Association="Self.FK_branch">
+            <End Role="Bank_branch1" EntitySet="Bank_branch1" />
+            <End Role="SystemUser1" EntitySet="SystemUser1" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BankModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bank_branch1">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="Int32" Nullable="false" />
+          <Property Name="BranchName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SystemUser1" Relationship="Self.FK_branch" FromRole="Bank_branch1" ToRole="SystemUser1" />
+        </EntityType>
+        <EntityType Name="SystemUser1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pasword" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Account_Number" Type="Int32" />
+          <Property Name="credit" Type="Int32" />
+          <Property Name="BrunchCode" Type="Int32" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="UserType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Bank_branch1" Relationship="Self.FK_branch" FromRole="SystemUser1" ToRole="Bank_branch1" />
+        </EntityType>
+        <Association Name="FK_branch">
+          <End Role="Bank_branch1" Type="Self.Bank_branch1" Multiplicity="0..1" />
+          <End Role="SystemUser1" Type="Self.SystemUser1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bank_branch1">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="SystemUser1">
+              <PropertyRef Name="BrunchCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BankEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bank_branch1" EntityType="Self.Bank_branch1" />
+          <EntitySet Name="SystemUser1" EntityType="Self.SystemUser1" />
+          <AssociationSet Name="FK_branch" Association="Self.FK_branch">
+            <End Role="Bank_branch1" EntitySet="Bank_branch1" />
+            <End Role="SystemUser1" EntitySet="SystemUser1" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BankModelStoreContainer" CdmEntityContainer="BankEntities">
+          <EntitySetMapping Name="Bank_branch1">
+            <EntityTypeMapping TypeName="BankModel.Bank_branch1">
+              <MappingFragment StoreEntitySet="Bank_branch1">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemUser1">
+            <EntityTypeMapping TypeName="BankModel.SystemUser1">
+              <MappingFragment StoreEntitySet="SystemUser1">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Pasword" ColumnName="Pasword" />
+                <ScalarProperty Name="Account_Number" ColumnName="Account_Number" />
+                <ScalarProperty Name="credit" ColumnName="credit" />
+                <ScalarProperty Name="BrunchCode" ColumnName="BrunchCode" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
